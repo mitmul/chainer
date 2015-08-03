@@ -18,6 +18,7 @@ from chainer.functions import local_response_normalization
 from chainer.functions import lstm
 from chainer.functions import matmul
 from chainer.functions import mean_squared_error
+from chainer.functions import mrelu
 from chainer.functions import negative_sampling
 from chainer.functions import nonparameterized_convolution_2d
 from chainer.functions import nonparameterized_linear
@@ -74,6 +75,7 @@ BinaryHierarchicalSoftmax = hierarchical_softmax.BinaryHierarchicalSoftmax
 create_huffman_tree = hierarchical_softmax.create_huffman_tree
 Linear = linear.Linear
 NegativeSampling = negative_sampling.NegativeSampling
+MReLU = mrelu.MReLU
 Parameter = parameter.Parameter
 PReLU = prelu.PReLU
 
