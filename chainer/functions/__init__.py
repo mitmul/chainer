@@ -22,6 +22,7 @@ from chainer.functions import negative_sampling
 from chainer.functions import nonparameterized_convolution_2d
 from chainer.functions import nonparameterized_linear
 from chainer.functions import parameter
+from chainer.functions import pixelwise_softmax_cross_entropy
 from chainer.functions import pooling_2d
 from chainer.functions import prelu
 from chainer.functions import relu
@@ -63,6 +64,7 @@ Accuracy = accuracy.Accuracy
 MeanSquaredError = mean_squared_error.MeanSquaredError
 SigmoidCrossEntropy = sigmoid_cross_entropy.SigmoidCrossEntropy
 SoftmaxCrossEntropy = softmax_cross_entropy.SoftmaxCrossEntropy
+PixelwiseSoftmaxCrossEntropy = pixelwise_softmax_cross_entropy.PixelwiseSoftmaxCrossEntropy
 Sum = sum_.Sum
 Inception = inception.Inception
 InceptionBN = inceptionbn.InceptionBN
@@ -108,4 +110,5 @@ accuracy = accuracy.accuracy
 mean_squared_error = mean_squared_error.mean_squared_error
 sigmoid_cross_entropy = sigmoid_cross_entropy.sigmoid_cross_entropy
 softmax_cross_entropy = softmax_cross_entropy.softmax_cross_entropy
+pixelwise_softmax_cross_entropy = pixelwise_softmax_cross_entropy.pixelwise_softmax_cross_entropy
 sum = sum_.sum
