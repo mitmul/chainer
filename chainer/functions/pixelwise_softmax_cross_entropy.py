@@ -32,8 +32,6 @@ class PixelwiseSoftmaxCrossEntropy(function.Function):
         self.y, = self.pixelwise_softmax_gpu((x,))
         n, c, h, w = x.shape
         z = cuda.empty((n, 1, h, w))
-        print self.y[0, :, 0, 0], t[0, :, 0, 0]
-        print z.dtype, self.y.dtype, t.dtype, c
         cuda.elementwise(
             '''
             float* z, const float* y, const int* label, int cdim, int rdim
@@ -43,7 +41,6 @@ class PixelwiseSoftmaxCrossEntropy(function.Function):
             int y_ind = n * cdim * rdim + t * rdim + i % rdim;
             z[i] = -log(y[y_ind]);
             ''', 'channelwise_fwd')(z, self.y, t, c, h * w)
-        print cuda.gpuarray.sum(z),
         z = cuda.gpuarray.sum(z) / n / h / w
 
         return z,
@@ -51,14 +48,18 @@ class PixelwiseSoftmaxCrossEntropy(function.Function):
     def backward_gpu(self, inputs, grad_outputs):
         t, gloss = inputs[1], grad_outputs[0]
         gx = cuda.empty_like(self.y)
+        n, c, h, w = gx.shape
         coeff = gloss / t.size
         cuda.elementwise(
             '''
-           float* gx, const float* y, const int* t, const float* coeff,
-           int n_channel
-        ''',
-            'gx[i] = *coeff * (y[i] - ((i % n_channel) == t[i / n_channel]))',
-            'channelwise_bwd')(gx, self.y, t, coeff, self.y.shape[1])
+            float* gx, const float* y, const int* label, const float* coeff,
+            int cdim, int rdim
+            ''', '''
+            int n = i / rdim / cdim;
+            int t = label[n * rdim + i % rdim];
+            int c = i / rdim % cdim;
+            gx[i] = *coeff * (y[i] - (t == c));
+            ''', 'channelwise_bwd')(gx, self.y, t, coeff, c, h * w)
 
         return gx, None
 
