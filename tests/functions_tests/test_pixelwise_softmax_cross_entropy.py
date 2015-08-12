@@ -19,9 +19,9 @@ class TestPixelwiseSoftmaxCrossEntropy(unittest.TestCase):
 
     def setUp(self):
         self.x = numpy.random.uniform(
-            -1, 1, (10, 3, 16, 16)).astype(numpy.float32)
+            -1, 1, (2, 3, 5, 5)).astype(numpy.float32)
         self.t = numpy.random.randint(
-            3, size=(10, 1, 16, 16)).astype(numpy.int32)
+            3, size=(2, 1, 5, 5)).astype(numpy.int32)
 
     def check_forward(self, x0_data, x1_data):
         x = chainer.Variable(x0_data)
@@ -39,7 +39,7 @@ class TestPixelwiseSoftmaxCrossEntropy(unittest.TestCase):
             numpy.exp(_x, out=_x)
             _x /= numpy.sum(_x)
             loss_expect += -numpy.log(_x[self.t[i]])
-        loss_expect /= self.t.size
+        loss_expect /= self.t.shape[0]
 
         self.assertAlmostEqual(loss_expect, loss_value, places=5)
 
@@ -59,7 +59,7 @@ class TestPixelwiseSoftmaxCrossEntropy(unittest.TestCase):
         f = lambda: func.forward((x.data, t.data))
         gx, = gradient_check.numerical_grad(f, (x.data,), (1,), eps=0.02)
 
-        gradient_check.assert_allclose(gx, x.grad)
+        gradient_check.assert_allclose(gx, x.grad, atol=1e-4)
 
     @attr.gpu
     @condition.retry(3)

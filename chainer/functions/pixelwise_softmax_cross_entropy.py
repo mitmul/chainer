@@ -41,7 +41,7 @@ class PixelwiseSoftmaxCrossEntropy(function.Function):
             int y_ind = n * cdim * rdim + t * rdim + i % rdim;
             z[i] = -log(y[y_ind]);
             ''', 'channelwise_fwd')(z, self.y, t, c, h * w)
-        z = cuda.gpuarray.sum(z) / n / h / w
+        z = cuda.gpuarray.sum(z) / n
 
         return z,
 
@@ -49,7 +49,7 @@ class PixelwiseSoftmaxCrossEntropy(function.Function):
         t, gloss = inputs[1], grad_outputs[0]
         gx = cuda.empty_like(self.y)
         n, c, h, w = gx.shape
-        coeff = gloss / t.size
+        coeff = gloss / n
         cuda.elementwise(
             '''
             float* gx, const float* y, const int* label, const float* coeff,
