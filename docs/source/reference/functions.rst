@@ -41,6 +41,7 @@ Array computations
 
 Activation functions
 --------------------
+.. autofunction:: clipped_relu
 .. autofunction:: cos
 .. autofunction:: exp
 .. autofunction:: leaky_relu
@@ -84,3 +85,10 @@ Reusable subnetwork of complex architectures
 --------------------------------------------
 .. autoclass:: Inception
 .. autoclass:: InceptionBN
+
+Variational Auto-Encoder (VAE)
+------------------------------
+.. module:: chainer.functions.vae
+.. autofunction:: gaussian_kl_divergence
+.. autofunction:: bernoulli_nll
+.. autofunction:: gaussian_nll
