@@ -111,6 +111,10 @@ copy
 ~~~~
 .. autofunction:: copy
 
+depth2space
+~~~~~~~~~~~
+.. autofunction:: depth2space
+
 dstack
 ~~~~~~
 .. autofunction:: dstack
@@ -123,6 +127,14 @@ flatten
 ~~~~~~~
 .. autofunction:: flatten
 
+fliplr
+~~~~~~
+.. autofunction:: fliplr
+
+flipud
+~~~~~~
+.. autofunction:: flipud
+
 get_item
 ~~~~~~~~
 .. autofunction:: get_item
@@ -130,6 +142,10 @@ get_item
 hstack
 ~~~~~~
 .. autofunction:: hstack
+
+pad
+~~~
+.. autofunction:: pad
 
 permutate
 ~~~~~~~~~
@@ -150,6 +166,10 @@ select_item
 separate
 ~~~~~~~~
 .. autofunction:: separate
+
+space2depth
+~~~~~~~~~~~
+.. autofunction:: space2depth
 
 split_axis
 ~~~~~~~~~~
@@ -375,6 +395,10 @@ cosh
 exp
 ~~~
 .. autofunction:: exp
+
+fmod
+~~~~
+.. autofunction:: fmod
 
 floor
 ~~~~~
